@@ -1,138 +1,44 @@
-
-// var item;
-// item = "video games";
-
-// var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=a4921eeb6214478796b19a374cbc1301&q=" + item;
-// url += '?' + $.param({
-//   'api-key': "a4921eeb6214478796b19a374cbc1301",
-//   'q': "something"
-// });
-
-// $.ajax({
-//   url: url,
-//   method: 'GET',
-// }).done(function(result) {
-//   console.log(result);
-//   console.log(url);
-  
-// }).fail(function(err) {
-//   throw err;
-// });
-
-
-
-
-// var key = "a4921eeb6214478796b19a374cbc1301";
-// var q = "";
-// // just default values for the years here
-// var byear = "";
-// var eyear = "";
-
-// $("#submit-btn").on("click", function() {
-//   event.preventDefault();
-//   q = $("#searchTerm").val().trim();
-//   byear = $("#startDate").val().trim();
-//   eyear = $("#endDate").val().trim();
-//   console.log(q);
-
-//   var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-//   url += '?' + $.param({
-//     'api-key': key,
-//     'q': q
-//     // 'begin_date': byear + "0101",
-//     // 'end_date': eyear + "1231"
-//   });
-
-//   $.ajax({
-//     url: url,
-//     method: 'GET',
-//   }).done(function(result) {
-//     console.log(result);
-//     console.log(url);
-
-//     console.log(result.reponse.docs[0].headline.main);
-//     console.log(result.reponse.docs[0].headline.main);
-
-
-//   }).fail(function(err) {
-//     throw err;
-//   });
-
-// });
-
-// url = "";
-// key = "a4921eeb6214478796b19a374cbc1301";
-
-// function makeUrl() {
-//   url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
-//   searchq = $("#searchTerm").val().trim();
-//   api = {'api-key': key}
-//   q = {'q': searchq}
-
-//   url = url + $.param(api);
-//   url = url + $.param(q);
-// }
-
-// console.log(url);
-
-// makeUrl();
-
-// console.log(url);
-
-// $.ajax({
-//   url: url,
-//   method: 'GET',
-//   }).done(function(result) {
-//     console.log(result);
-//   }).fail(function(err) {
-//     throw err;
-//   });
-
-
-// var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
-// url += '?' + $.param({
-//   'api-key': "a4921eeb6214478796b19a374cbc1301",
-//   'q': "blade runner"
-// });
-// $.ajax({
-//   url: url,
-//   method: 'GET',
-// }).done(function(result) {
-//   console.log(result);
-// }).fail(function(err) {
-//   throw err;
-// });
-
+// function to update the page with the result information retrieved from the ajax function
 function updatePage(result) {
+  // clears the html
   $("#searchResults").empty();
 
   console.log(result);
   console.log(result.response.docs[0].headline.main);
 
+  // grabs amount of articles to display from numRecords input
   var numArticles = $("#numRecords").val();
 
+  // creates a bootstrap unordered list
   var articleList = $("<ul class='list-group'></ul>");
 
+  // loops through responses from ajax
   for (i=0; i < numArticles; i++) {
+    // makes var of the headline from the ajax response
     var headline = result.response.docs[i].headline.main;
+    // makes var of the url from the ajax response
     var url = result.response.docs[i].web_url;
 
+    // creates a new list item and appends the headline and a link with the url
     newli = $("<li class='list-group-item'>" + headline + "</li>");
     newli.append("<br>");
     newli.append("<a href='" + url + "'>" + "Link" + "</a>");
 
+    // appends the new list item into the unordered list
     articleList.append(newli);
     console.log(newli);
     console.log(headline);
   }
 
+  // appends the whole unordered list into the searchResults html
   $("#searchResults").append(articleList);
 
 }
 
 function buildURL() {
   var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?";
-
+  // creates the queryParams for the url parameters
+  // sets first item to the api-key object
   var queryParams = {"api-key" : "a4921eeb6214478796b19a374cbc1301"};
 
   // this makes another item in the object queryParams
@@ -166,20 +72,25 @@ function buildURL() {
   console.log(query);
   console.log(queryURL + query);
 
+  // returns complete URL with query and parameters
   return queryURL + query;
 }
 
+// when submit is clicked, url is built and ajax runs
 $("#submit-btn").on("click", function() {
   event.preventDefault();
   
+  // builds url using the returned value from the function "buildURL()" above 
   var queryURL = buildURL();
   console.log(queryURL);
 
+  // runs ajax function with the built queryURL to return the response object 
   $.ajax({
     url: queryURL,
     method: 'GET'
   }).done(function(result) {
     console.log(result);
+    // this runs the "updatePage()" function and brings the response information (object) with it
     updatePage(result);
   }).fail(function(err) {
     throw err;
