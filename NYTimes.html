@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NYT Article Search</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="NYTstyle.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+  
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+
+      <div class="jumbotron text-center">
+        <h1><span class="fa fa-newspaper-o" area-hidden="true"></span> NYT Article Search</h1>
+      </div>
+    </div>
+
+    <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-heading"><span class="fa fa-newspaper-o" area-hidden="true"></span> Search Here</div>
+          <div class="panel-body">
+            <form>
+              <div class="form-group">
+                <label for="searchTerm">Search Term:</label>
+                <input type="text" class="form-control" id="searchTerm" placeholder="Search Term">
+              </div>
+
+              <div class="form-group">
+                <label for="numRecords">Number of Records to Retrieve:</label>
+                <input type="number" class="form-control" id="numRecords" min="1" max="10" placeholder="5">
+              </div>
+
+              <div class="form-group">
+                <label for="startDate">Start Year (optional):</label>
+                <input type="text" class="form-control" id="startDate" >
+              </div>
+
+              <div class="form-group">
+                <label for="endDate">End Year (optional):</label>
+                <input type="text" class="form-control" id="endDate" >
+              </div>
+
+             
+              <button type="submit" id="submit-btn" class="btn btn-default submit">Submit</button>
+              <button type="reset" class="btn btn-default reset">Clear Form</button>
+            </form>
+          </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-heading"><span class="fa fa-newspaper-o"></span> Search Results</div>
+          <div class="panel-body" id="searchResults">
+           
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
